@@ -1,0 +1,7 @@
+This is similar to what happens when you are using threads. Just like when
+we are sharing the canvas, multiple threads would be executing concurrently
+sharing the same memory space. This is more efficient because we’re not
+consuming large amounts of memory per execution. In addition, sharing
+memory space usually means that you don’t have to merge your work at the
+end. Depending on the problem we’re solving, we might reach the solution
+more efficiently by sharing the memory with other threads. txtfile3
