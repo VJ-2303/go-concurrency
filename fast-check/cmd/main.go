@@ -46,10 +46,12 @@ func main() {
 	}()
 
 	for r := range result {
-		if r.StatusCode == http.StatusOK {
-			fmt.Printf("site : %s OK\n", r.URL)
+		if r.Error != nil {
+			fmt.Printf("site : %s Error : %s\n", r.URL, r.Error)
+		} else if r.StatusCode != http.StatusOK {
+			fmt.Printf("site : %s Bad Status %d\n", r.URL, r.StatusCode)
 		} else {
-			fmt.Printf("site : %s Error\n", r.URL)
+			fmt.Printf("site : %s Okay\n", r.URL)
 		}
 	}
 }

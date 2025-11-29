@@ -7,15 +7,18 @@ import (
 	"github.com/VJ-2303/fast-check/internal/types"
 )
 
+var client = &http.Client{
+	Timeout: 10 * time.Second,
+}
+
 func CheckSite(URL string, result chan<- types.Result) {
-	client := http.Client{
-		Timeout: 5 * time.Second,
-	}
-	resp, err := client.Get(URL)
+	req, _ := http.NewRequest(http.MethodGet, URL, nil)
+	req.Header.Set("User-Agent", "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/91.0.4472.124 Safari/537.36")
+	resp, err := client.Do(req)
 	if err != nil {
 		r := types.Result{
-			URL:        URL,
-			StatusCode: 404,
+			URL:   URL,
+			Error: err,
 		}
 		result <- r
 		return
